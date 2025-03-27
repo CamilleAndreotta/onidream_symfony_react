@@ -46,8 +46,10 @@ services:
       - onidream
 
   onidream_adminer:
-    container_name: adminer-westiti
+    container_name: onidream_adminer
     image: adminer
+    ports:
+      - 8090:8080
     networks:
       - onidream
 

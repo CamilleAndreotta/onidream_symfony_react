@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
-        'reference' => '3dd435663d651fb15543899a6364f6f4930fecea',
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'reference' => null,
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,13 +11,148 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => '3dd435663d651fb15543899a6364f6f4930fecea',
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => null,
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'api-platform/core' => array(
+            'pretty_version' => 'v4.1.3',
+            'version' => '4.1.3.0',
+            'reference' => 'f6221b3244e12981177baa2bcf3f4ecefee992c7',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../api-platform/core',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'api-platform/doctrine-common' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v4.1.3',
+            ),
+        ),
+        'api-platform/doctrine-odm' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v4.1.3',
+            ),
+        ),
+        'api-platform/doctrine-orm' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v4.1.3',
+            ),
+        ),
+        'api-platform/documentation' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v4.1.3',
+            ),
+        ),
+        'api-platform/elasticsearch' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v4.1.3',
+            ),
+        ),
+        'api-platform/graphql' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v4.1.3',
+            ),
+        ),
+        'api-platform/http-cache' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v4.1.3',
+            ),
+        ),
+        'api-platform/hydra' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v4.1.3',
+            ),
+        ),
+        'api-platform/json-api' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v4.1.3',
+            ),
+        ),
+        'api-platform/json-hal' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v4.1.3',
+            ),
+        ),
+        'api-platform/json-schema' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v4.1.3',
+            ),
+        ),
+        'api-platform/jsonld' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v4.1.3',
+            ),
+        ),
+        'api-platform/laravel' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v4.1.3',
+            ),
+        ),
+        'api-platform/metadata' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v4.1.3',
+            ),
+        ),
+        'api-platform/openapi' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v4.1.3',
+            ),
+        ),
+        'api-platform/parameter-validator' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v4.1.3',
+            ),
+        ),
+        'api-platform/ramsey-uuid' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v4.1.3',
+            ),
+        ),
+        'api-platform/serializer' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v4.1.3',
+            ),
+        ),
+        'api-platform/state' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v4.1.3',
+            ),
+        ),
+        'api-platform/symfony' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v4.1.3',
+            ),
+        ),
+        'api-platform/validator' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v4.1.3',
+            ),
         ),
         'composer/semver' => array(
             'pretty_version' => '3.4.3',
@@ -189,6 +324,15 @@
             'install_path' => __DIR__ . '/../myclabs/deep-copy',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'nelmio/cors-bundle' => array(
+            'pretty_version' => '2.5.0',
+            'version' => '2.5.0.0',
+            'reference' => '3a526fe025cd20e04a6a11370cf5ab28dbb5a544',
+            'type' => 'symfony-bundle',
+            'install_path' => __DIR__ . '/../nelmio/cors-bundle',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'nikic/php-parser' => array(
             'pretty_version' => 'v5.4.0',
@@ -1334,6 +1478,15 @@
             'reference' => '11cb2199493b2f8a3b53e7f19068fc6aac760991',
             'type' => 'library',
             'install_path' => __DIR__ . '/../webmozart/assert',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'willdurand/negotiation' => array(
+            'pretty_version' => '3.1.0',
+            'version' => '3.1.0.0',
+            'reference' => '68e9ea0553ef6e2ee8db5c1d98829f111e623ec2',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../willdurand/negotiation',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
