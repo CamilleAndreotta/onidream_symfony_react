@@ -1,0 +1,57 @@
+services:
+  onidream_nginx:
+    container_name: onidream_nginx
+    image: nginx:latest
+    ports: 
+      - 8080:80
+    volumes: 
+      - ./onidream_back:/var/www/html
+      - ./nginx/conf/default.conf:/etc/nginx/conf.d/default.conf
+    links:
+      - onidream_back
+    networks:
+      - onidream
+
+  onidream_back:
+    container_name: onidream_back
+    build:
+     context: .
+     dockerfile: docker/php-fpm/dockerfile
+    volumes:
+      - ./onidream_back:/var/www/html
+    networks:
+      - onidream
+
+  onidream_front: 
+    container_name: onidream_front
+    build:
+      context: ./onidream_front
+      dockerfile: dockerfile
+    ports:
+      - 5173:5173
+    volumes: 
+      - ./onidream_front:/onidream_front
+      - /onidream_front/node_modules
+    networks:
+      - onidream
+
+  onidream_postgres:
+    container_name: onidream_postgres
+    image: postgres:latest
+    volumes:
+      - ./postgresql/data:/var/lib/postgresql/data
+    env_file:
+      - .env  
+    networks:
+      - onidream
+
+  onidream_adminer:
+    container_name: adminer-westiti
+    image: adminer
+    networks:
+      - onidream
+
+
+networks:
+  onidream:
+    driver: bridge

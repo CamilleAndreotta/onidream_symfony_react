@@ -1,0 +1,15 @@
+FROM php:8.3.4-fpm
+
+RUN apt-get update
+
+RUN apt-get -y install libxml2-dev libonig-dev git zip unzip vim libpq-dev
+
+RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
+RUN docker-php-ext-configure intl
+
+RUN docker-php-ext-install dom xml mbstring pdo pdo_pgsql intl
+
+RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
+   mv composer.phar /usr/local/bin/composer
+
+WORKDIR /var/www/html
