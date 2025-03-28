@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AutorsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,6 +27,17 @@ class Autors
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $biography = null;
+
+    /**
+     * @var Collection<int, Books>
+     */
+    #[ORM\ManyToMany(targetEntity: Books::class, inversedBy: 'autors')]
+    private Collection $book;
+
+    public function __construct()
+    {
+        $this->book = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +88,30 @@ class Autors
     public function setBiography(?string $biography): static
     {
         $this->biography = $biography;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Books>
+     */
+    public function getBook(): Collection
+    {
+        return $this->book;
+    }
+
+    public function addBook(Books $book): static
+    {
+        if (!$this->book->contains($book)) {
+            $this->book->add($book);
+        }
+
+        return $this;
+    }
+
+    public function removeBook(Books $book): static
+    {
+        $this->book->removeElement($book);
 
         return $this;
     }
