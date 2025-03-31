@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 #[ORM\Entity(repositoryClass: ExcerptsRepository::class)]
 class Excerpts
@@ -14,33 +16,51 @@ class Excerpts
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups( ["excerpt:read", "category:read", "author:read", "book:read", "editor:read", "category:show"])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups( ["excerpt:read", "category:read", "author:read", "book:read", "editor:read", "category:show"])]
     private ?string $text = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups( ["excerpt:read","category:read", "author:read", "book:read", "editor:read", "category:show"])]
     private ?\DateTimeInterface $bookStartedOn = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups( ["excerpt:read", "category:read", "author:read", "book:read", "editor:read", "category:show"])]
     private ?\DateTimeInterface $bookEndedOn = null;
 
     #[ORM\Column(length: 10, nullable: true)]
+    #[Groups( ["excerpt:read", "category:read", "author:read", "book:read", "editor:read","category:show"])]
     private ?string $bookPage = null;
 
     #[ORM\ManyToOne(inversedBy: 'excerpts')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups( ["excerpt:read", "category:read", "category:show"])]
     private ?Books $books = null;
 
     /**
      * @var Collection<int, Categories>
      */
     #[ORM\ManyToMany(targetEntity: Categories::class, mappedBy: 'excerpts')]
+    #[Groups( ["excerpt:read", "editor:read"])]
+    #[MaxDepth(1)]
     private Collection $categories;
+
+    /**
+     * @var Collection<int, Users>
+     */
+    #[ORM\ManyToMany(targetEntity: Users::class, mappedBy: 'excerpts')]
+    private Collection $users;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $creatorId = null;
 
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -131,6 +151,45 @@ class Excerpts
         if ($this->categories->removeElement($category)) {
             $category->removeExcerpt($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Users>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(Users $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addExcerpt($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(Users $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeExcerpt($this);
+        }
+
+        return $this;
+    }
+
+    public function getCreatorId(): ?int
+    {
+        return $this->creatorId;
+    }
+
+    public function setCreatorId(?int $creatorId): static
+    {
+        $this->creatorId = $creatorId;
 
         return $this;
     }
