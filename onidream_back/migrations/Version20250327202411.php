@@ -21,7 +21,7 @@ final class Version20250327202411 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            CREATE TABLE autors (id SERIAL NOT NULL, firstname VARCHAR(200) NOT NULL, lastname VARCHAR(200) NOT NULL, birth_date DATE NOT NULL, biography TEXT DEFAULT NULL, PRIMARY KEY(id))
+            CREATE TABLE authors (id SERIAL NOT NULL, firstname VARCHAR(200) NOT NULL, lastname VARCHAR(200) NOT NULL, birth_date DATE NOT NULL, biography TEXT DEFAULT NULL, PRIMARY KEY(id))
         SQL);
     }
 
@@ -32,7 +32,7 @@ final class Version20250327202411 extends AbstractMigration
             CREATE SCHEMA public
         SQL);
         $this->addSql(<<<'SQL'
-            DROP TABLE autors
+            DROP TABLE authors
         SQL);
     }
 }

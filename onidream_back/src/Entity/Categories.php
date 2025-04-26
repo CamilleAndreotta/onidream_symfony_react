@@ -6,6 +6,8 @@ use App\Repository\CategoriesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 #[ORM\Entity(repositoryClass: CategoriesRepository::class)]
 class Categories
@@ -13,16 +15,25 @@ class Categories
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups( ["category:read", "category:show"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 200)]
+    #[Groups( ["category:read", "category:show", "editor:read", "excerpt:read"])]
     private ?string $name = null;
 
     /**
      * @var Collection<int, Excerpts>
      */
     #[ORM\ManyToMany(targetEntity: Excerpts::class, inversedBy: 'categories')]
+    #[Groups( ["category:read", "category:show"])]
     private Collection $excerpts;
+
+    #[ORM\ManyToOne(inversedBy: 'categories')]
+    private ?Users $users = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $picture = null;
 
     public function __construct()
     {
@@ -66,6 +77,30 @@ class Categories
     public function removeExcerpt(Excerpts $excerpt): static
     {
         $this->excerpts->removeElement($excerpt);
+
+        return $this;
+    }
+
+    public function getUsers(): ?Users
+    {
+        return $this->users;
+    }
+
+    public function setUsers(?Users $users): static
+    {
+        $this->users = $users;
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): static
+    {
+        $this->picture = $picture;
 
         return $this;
     }

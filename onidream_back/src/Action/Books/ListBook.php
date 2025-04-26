@@ -1,13 +1,14 @@
 <?php 
 
-namespace App\Service\Editor;
+namespace App\Action\Books;
 
-use App\Entity\Editors;
-use App\Service\AbstractJsonService;
+use App\Action\AbstractActions;
+use App\Entity\Books;
+use App\Utils\EntityTypeUtils;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class ListEditorService extends AbstractJsonService
+class ListBook extends AbstractActions
 {
     public function __construct(
         private EntityManagerInterface $em,
@@ -18,7 +19,7 @@ class ListEditorService extends AbstractJsonService
 
     public function list(): string
     {
-        $editors = $this->em->getRepository(Editors::class)->findAll();
-        return $this->serializeArrayToJson($editors);
+        $books = $this->em->getRepository(Books::class)->findAll();
+        return $this->serialize($books, EntityTypeUtils::BOOK);
     }
 }

@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: EditorsRepository::class)]
 class Editors
@@ -14,17 +15,23 @@ class Editors
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups( ["editor:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 200)]
     #[Assert\NotBlank]
+    #[Groups( ["editor:read", "author:read", "book:read", "category:show", "excerpt:read"])]
     private ?string $name = null;
 
     /**
      * @var Collection<int, Books>
      */
     #[ORM\OneToMany(targetEntity: Books::class, mappedBy: 'editor')]
+    #[Groups( ["editor:read"])]
     private Collection $books;
+
+    #[ORM\ManyToOne(inversedBy: 'editors')]
+    private ?Users $users = null;
 
     public function __construct()
     {
@@ -74,6 +81,18 @@ class Editors
                 $book->setEditor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUsers(): ?Users
+    {
+        return $this->users;
+    }
+
+    public function setUsers(?Users $users): static
+    {
+        $this->users = $users;
 
         return $this;
     }

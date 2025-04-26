@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Categories;
+use App\Entity\Users;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,28 +17,54 @@ class CategoriesRepository extends ServiceEntityRepository
         parent::__construct($registry, Categories::class);
     }
 
-    //    /**
-    //     * @return Categories[] Returns an array of Categories objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function add(Categories $entity, Users $user): Categories
+    {
+        $this->getEntityManager()->persist($entity);
+        $entity->setUsers($user);
+        $this->getEntityManager()->flush();
+        return $entity;
+    }
 
-    //    public function findOneBySomeField($value): ?Categories
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findByName(string $name): Categories|null
+    {   
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.name =:name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function update(Categories $entity): Categories
+    {
+        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->flush();
+        return $entity;
+    }
+
+    public function remove(Categories $entity): void
+    {
+        $this->getEntityManager()->remove($entity);
+        $this->getEntityManager()->flush();
+    }
+
+    public function findCategoryWithoutRelations(string $id): Categories|null
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.name')
+            ->where('c.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+        ;
+    }
+    
+    public function findCategoriesByUser(Users $user){
+        return $this->createQueryBuilder('c')
+            ->select('c.name', 'c.id')
+            ->where('c.users = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+        ;
+    }
 }
