@@ -31,7 +31,7 @@ services:
       - 5173:5173
     volumes: 
       - ./onidream_front:/onidream_front
-      - /onidream_front/node_modules
+      - /onidream_front/node_modules:/node_modules/node_modules
     networks:
       - onidream
 
@@ -53,6 +53,8 @@ services:
     networks:
       - onidream
 
+volumes:
+  node_modules: {}
 
 networks:
   onidream:
