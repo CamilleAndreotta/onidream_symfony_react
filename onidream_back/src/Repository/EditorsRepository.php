@@ -50,7 +50,7 @@ class EditorsRepository extends ServiceEntityRepository
     public function findEditorWithoutRelations(string $id): Editors|null
     {
         return $this->createQueryBuilder('e')
-            ->select('e.name')
+            ->select('e.id, e.name')
             ->where('e.id = :id')
             ->setParameter('id', $id)
             ->getQuery()

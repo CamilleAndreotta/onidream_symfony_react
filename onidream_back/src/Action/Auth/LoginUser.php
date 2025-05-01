@@ -52,7 +52,7 @@ class LoginUser extends AbstractActions
             throw new EntityExistException("L'identifiant ou le mot de passe ne semble pas correspondre.");
         }
 
-        if(!($this->hasher->isPasswordValid($isUserExist, $loginUserDTO->password)) && !($isUserExist instanceof(Users::class))){
+        if(!$this->hasher->isPasswordValid($isUserExist, $loginUserDTO->password)){
             throw new EntityExistException("L'identifiant ou le mot de passe ne semble pas correspondre.");
         };
 

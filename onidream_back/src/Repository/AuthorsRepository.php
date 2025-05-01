@@ -53,7 +53,7 @@ class AuthorsRepository extends ServiceEntityRepository
     public function findAuthorWithoutRelations(string $id): Authors|null
     {
         return $this->createQueryBuilder('a')
-            ->select('a.firstname', 'a.lastname', 'a.birthDate', 'a.biography')
+            ->select('a.id, a.firstname', 'a.lastname', 'a.birthDate', 'a.biography')
             ->where('a.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
@@ -63,7 +63,7 @@ class AuthorsRepository extends ServiceEntityRepository
 
     public function findAuthorsByUser(Users $user){
         return $this->createQueryBuilder('a')
-            ->select('a.firstname', 'a.lastname', 'a.birthDate', 'a.biography')
+            ->select('a.id, a.firstname', 'a.lastname', 'a.birthDate', 'a.biography')
             ->where('a.users = :user')
             ->setParameter('user', $user)
             ->getQuery()
