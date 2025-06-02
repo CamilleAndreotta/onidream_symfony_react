@@ -3,10 +3,43 @@ import { useExcerpts } from "../../context/ExcerptContext";
 import ExcerptLine from "../../components/lines/ExcerptLine";
 import { ExcerptType } from "../../@types/Excerpt";
 import PageLoading from "../../components/spinner/PageLoading";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const ListExcerptPage = () => {
 
     const {excerpts, setExcerpts, loading} = useExcerpts();
+    const [searchTerm, setSearchTerm] = useState("");
+
+    useEffect(() => {
+  const delayDebounce = setTimeout(() => {
+    const fetchFilteredExcerpts = async () => {
+      try {
+        const query = new URLSearchParams();
+        if (searchTerm) query.append("search", searchTerm);
+
+        const token = localStorage.getItem("token");
+
+        const response = await axios.get(
+          `http://localhost:8080/api/excerpts/user?${query.toString()}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        setExcerpts(response.data);
+      } catch (error) {
+        console.error("Erreur lors du chargement des extraits filtrés :", error);
+      }
+    };
+
+    fetchFilteredExcerpts();
+  }, 500);
+  return () => clearTimeout(delayDebounce);
+}, [searchTerm]);
     
     const handleDeleteExcerpt = (id: string) => {
         setExcerpts((prev: ExcerptType[])=> prev.filter(excerpt => excerpt.id !== id));
@@ -23,6 +56,16 @@ const ListExcerptPage = () => {
 
             <section className="flex w-full justify-center items-center mb-4">
                 <Link to="/excerpt" className="flex bg-cyan-950 p-2 rounded-md text-white hover:scale-105">Ajouter un passage de livre</Link>
+            </section>
+
+            <section className="flex w-full justify-center items-center mb-4">
+               <input 
+                    type="text"
+                    placeholder="Recherche d'un terme dans l'extrait"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="p-2 border border-gray-300 rounded-md w-full md:w-1/2"
+                />
             </section>
 
             <table className="table-auto border border-gray-400 w-full bg-white">

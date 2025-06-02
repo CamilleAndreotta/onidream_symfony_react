@@ -75,7 +75,7 @@ class CreateExcerpt extends AbstractActions
         $bookEndedOn = new DateTime($createExcerptDTO->bookEndedOn);
 
         $excerpt = new Excerpts();
-        $excerpt->setText($createExcerptDTO->text);
+        $excerpt->setText(html_entity_decode($createExcerptDTO->text, ENT_QUOTES, 'UTF-8'));
         $excerpt->setBookStartedOn($bookStartedOn);
         $excerpt->setBookEndedOn($bookEndedOn);
         $excerpt->setBookPage($createExcerptDTO->bookPage);

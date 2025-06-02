@@ -94,6 +94,11 @@ class EditExcerpt extends AbstractActions
 
         $excerptToUpdate = $this->deserialize($jsonExcerpt, Excerpts::class, $excerpt);
 
+        if($updateExcerptDTO->text) {
+            $text = html_entity_decode($updateExcerptDTO->text, ENT_QUOTES, 'UTF-8');
+            $excerptToUpdate->setText($text);
+        }
+
         if($updateExcerptDTO->bookStartedOn){
             $bookStartedOn = new DateTime($updateExcerptDTO->bookStartedOn);
             $excerptToUpdate->setBookStartedOn($bookStartedOn);

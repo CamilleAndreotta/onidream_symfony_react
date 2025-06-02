@@ -18,9 +18,9 @@ class ListExcerptByUser extends AbstractActions
         parent::__construct($serializer);
     }
 
-    public function list(Users $user): string
+    public function list(Users $user, null|string $searchTerm): string
     {   
-        $excerpts = $this->em->getRepository(Excerpts::class)->findExcerptsByUser($user);
+        $excerpts = $this->em->getRepository(Excerpts::class)->findExcerptsByUser($user, $searchTerm);
         return $this->serialize($excerpts, EntityTypeUtils::EXCERPT);
     }
 }

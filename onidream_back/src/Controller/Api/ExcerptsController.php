@@ -34,10 +34,11 @@ final class ExcerptsController extends AbstractController
     }
 
     #[Route('/api/excerpts/user', name: 'app_api_excerpts_user', methods:['GET'])]
-    public function indexBooksByUser(Security $security): JsonResponse
+    public function indexExcerptsByUser(Security $security, Request $request): JsonResponse
     {   
+        $searchTerm = $request->get('search');
         $user = $security->getUser();
-        return new JsonResponse($this->listExcerptByUser->list($user), 200, [], true);
+        return new JsonResponse($this->listExcerptByUser->list($user, $searchTerm), 200, [], true);
     }
 
     #[Route('/api/excerpts/{excerpt}', name: 'app_api_excerpt', methods:['GET'])]

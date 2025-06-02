@@ -65,11 +65,17 @@ class ExcerptsRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function findExcerptsByUser(Users $user){
-        return $this->createQueryBuilder('e')
+    public function findExcerptsByUser(Users $user, null|string $searchTerm){
+        $qb =$this->createQueryBuilder('e')
             ->leftJoin('e.users', 'u')
-            ->where('u.id = :user')
-            ->setParameter('user', $user)
+            ->where('u.id = :user');
+
+        if($searchTerm !== null){
+            $qb->andWhere('LOWER(e.text) LIKE LOWER(:search)')
+                ->setParameter('search', '%' . $searchTerm . '%');
+        }
+
+        return $qb->setParameter('user', $user)
             ->getQuery()
             ->getResult();
     }
