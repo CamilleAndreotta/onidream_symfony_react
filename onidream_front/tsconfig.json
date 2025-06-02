@@ -1,4 +1,19 @@
 {
+  "compilerOptions": {
+    "target": "ES5",                    
+    "lib": ["dom", "esnext"],
+    "jsx": "react-jsx",                 
+    "moduleResolution": "node16",         
+    "esModuleInterop": true,            
+    "allowSyntheticDefaultImports": true, 
+    "strict": true,
+    "skipLibCheck": true,     
+    "forceConsistentCasingInFileNames": true    
+  },
+  "include": [
+    "src/**/*",
+    "types/**/*"
+  ],
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },

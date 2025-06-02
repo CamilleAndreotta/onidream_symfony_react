@@ -77,10 +77,10 @@ class BooksRepository extends ServiceEntityRepository
     }
 
     public function findBooksByUser(Users $user){
+        $userId = $user->getId();
         return $this->createQueryBuilder('b')
-            ->leftJoin('b.users', 'u')
-            ->where('u.id = :user')
-            ->setParameter('user', $user)
+            ->where('b.creatorId = :userId')
+            ->setParameter('userId', $userId)
             ->getQuery()
             ->getResult();
     }

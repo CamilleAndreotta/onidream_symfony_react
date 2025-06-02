@@ -44,7 +44,7 @@ class Excerpts
      * @var Collection<int, Categories>
      */
     #[ORM\ManyToMany(targetEntity: Categories::class, mappedBy: 'excerpts')]
-    #[Groups( ["excerpt:read", "editor:read"])]
+    #[Groups( ["excerpt:read", "editor:read", "book:read", "author:read"])]
     #[MaxDepth(1)]
     private Collection $categories;
 
