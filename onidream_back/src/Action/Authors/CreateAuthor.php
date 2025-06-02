@@ -46,11 +46,13 @@ class CreateAuthor extends AbstractActions
         } 
         
         $birthDate = new DateTime($createAuthorDTO->birthDate);
+        $deathDate = new DateTime($createAuthorDTO->deathDate);
         
         $author = new Authors();
         $author->setFirstname($createAuthorDTO->firstname);
         $author->setLastname($createAuthorDTO->lastname);
         $author->setBirthDate($birthDate);
+        $author->setDeathDate($deathDate);
         $author->setBiography($createAuthorDTO->biography);
         
         $authorSaved = $this->authorsRepository->add($author, $user);

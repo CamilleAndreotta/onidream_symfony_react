@@ -15,5 +15,8 @@ class UpdateAuthorDTO
     #[Assert\Date]
     public ?string $birthDate = null;
 
+    #[Assert\Date]
+    public ?string $deathDate = null;
+
     public ?string $biography = null;
 }

@@ -18,6 +18,12 @@ const AuthorLine = ({author}: AuthorLineProps) => {
     const authorBirthDate = new Date(author.birthDate);
     const authorBirthdateFormatted = authorBirthDate.toLocaleDateString("fr-FR");
 
+    let authorDeathdateFormatted = null;
+    if(author.deathDate !== null) {
+        const authorDeathDate = new Date(author.deathDate);
+        authorDeathdateFormatted = authorDeathDate.toLocaleDateString("fr-FR");
+    }
+
     function truncateHtmlText(html: string, maxLength: number): string {
         const sanitized = DOMPurify.sanitize(html);
         const tempDiv = document.createElement("div");
@@ -53,6 +59,7 @@ const AuthorLine = ({author}: AuthorLineProps) => {
             <td className="border border-gray-300 px-4 py-2" scope="row">{author.lastname}</td>
             <td className="border border-gray-300 px-4 py-2" scope="row">{author.firstname}</td>
             <td className="border border-gray-300 px-4 py-2" scope="row">{authorBirthdateFormatted}</td>
+            <td className="border border-gray-300 px-4 py-2" scope="row">{authorDeathdateFormatted}</td>
             <td className="border border-gray-300 px-4 py-2 w-1/3" dangerouslySetInnerHTML={{ __html: text }} />
             <td className="border border-gray-300 px-4 py-2">
                 <div className="flex flex-row gap-2">

@@ -18,5 +18,9 @@ class CreateAuthorDTO
     #[Assert\Date]
     public string $birthDate;
 
+    #[Assert\NotBlank]
+    #[Assert\Date]
+    public string $deathDate;
+
     public ?string $biography;
 }

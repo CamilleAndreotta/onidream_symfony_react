@@ -3,5 +3,6 @@ export type AuthorType = {
     firstname: string,
     lastname: string,
     birthDate: string,
+    deathDate: string | null,
     biography: string
 }

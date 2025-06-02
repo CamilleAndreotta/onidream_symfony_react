@@ -29,6 +29,10 @@ class Authors
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Groups( ["author:read", "category:read", "book:read", "editor:read", "category:show", "excerpt:read"])]
     private ?\DateTimeInterface $birthDate = null;
+    
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Groups( ["author:read", "category:read", "book:read", "editor:read", "category:show", "excerpt:read"])]
+    private ?\DateTimeInterface $deathDate = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups( ["author:read", "category:read", "book:read", "editor:read", "category:show", "excerpt:read"])]
@@ -43,6 +47,7 @@ class Authors
 
     #[ORM\ManyToOne(inversedBy: 'authors')]
     private ?Users $users = null;
+
 
     public function __construct()
     {
@@ -134,6 +139,18 @@ class Authors
     public function setUsers(?Users $users): static
     {
         $this->users = $users;
+
+        return $this;
+    }
+
+    public function getDeathDate(): ?\DateTimeInterface
+    {
+        return $this->deathDate;
+    }
+
+    public function setDeathDate(?\DateTimeInterface $deathDate): static
+    {
+        $this->deathDate = $deathDate;
 
         return $this;
     }

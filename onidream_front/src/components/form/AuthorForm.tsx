@@ -18,6 +18,7 @@ const AuthorForm = ({author, onClose}: AuthorFormProps) => {
         firstname: string,
         lastname: string, 
         birthDate: string,
+        deathDate: string | null,
         biography: string,
     }
 
@@ -33,10 +34,17 @@ const AuthorForm = ({author, onClose}: AuthorFormProps) => {
         if(author) {
             const authorBirthDate = new Date(author.birthDate);
             const authorBirthdateFormatted = authorBirthDate.toISOString().split('T')[0];
+
+            let authorDeathdateFormatted = null;
+            if(author.deathDate !== null ) {
+                const authorDeathDate = new Date(author.deathDate);
+                authorDeathdateFormatted = authorDeathDate.toISOString().split('T')[0];
+            }
             
             setValue("firstname", author.firstname);
             setValue("lastname", author.lastname);
             setValue("birthDate", authorBirthdateFormatted);
+            setValue("deathDate", authorDeathdateFormatted);
             setValue("biography", author.biography)
         }
     }, [author, setValue])
@@ -47,6 +55,10 @@ const AuthorForm = ({author, onClose}: AuthorFormProps) => {
 
     const onSubmit = async (data : AuthorInputs) => {
         try{
+            
+            if(data.deathDate === '') {
+                data.deathDate = null;
+            }
 
             let result = null;
 
@@ -121,6 +133,18 @@ const AuthorForm = ({author, onClose}: AuthorFormProps) => {
                     className="w-full p-2 mt-2 border-1 rounded-md bg-white"
                     />
                     {errors.birthDate && <p className="text-red-800 mt-4">{errors.birthDate.message}</p>}
+                </div>
+
+                <div className="mb-4">
+                    <label htmlFor="deathDate" className="font-bold">Date de décès de l'auteur :</label>
+                    <input
+                    type="date"
+                    id="deathDate"
+                    placeholder="Entrez la date de décès de l'auteur"
+                    {...register("deathDate", {})}
+                    className="w-full p-2 mt-2 border-1 rounded-md bg-white"
+                    />
+                    {errors.deathDate && <p className="text-red-800 mt-4">{errors.deathDate.message}</p>}
                 </div>
 
                 <div className="mb-4">
